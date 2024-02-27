@@ -1,0 +1,308 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.body {
+    font-size: 0;
+} 
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.head {
+    background-image: url("../images/canyon.png");
+    background-size: cover;
+}
+
+.header {
+    padding: 17px 0;
+}
+
+.running-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+} 
+
+.logo {
+    font: 26px/1 'Lora', sans-serif;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 1);
+    padding: 3px 20px 11px 20px;
+}
+
+.navigation__list {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+}
+
+.link {
+    font: 12px 'Oxygen', sans-serif;
+    line-height: 20px;
+    letter-spacing: 0.6px;
+    /* text-transform: uppercase; */
+    color: rgba(255, 255, 255, 1);
+    padding: 10px 20px;
+    text-decoration: none;    
+}
+
+.navigation__item:hover {
+    transform: scale(1.1);
+    transition: all 0.15s;    
+}
+
+.link:hover {
+    color: rgb(187, 207, 204);
+}
+
+.about-the-blog {
+    padding: 110px 0 157px 0;
+    text-align: center;
+}
+
+.about-the-blog__title {
+    font: 50px 'Lora', sans-serif;
+    line-height: 51px;
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 1);
+}
+
+.about-the-blog__subtitle{
+    font: 17px 'Oxygen', sans-serif;    
+    line-height: 20px;
+    color: rgba(255, 255, 255, 0.63);
+    padding: 20px 0 31px 0;
+}
+
+.button {
+    font: 13px 'Oxygen', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 20px;
+    color: rgba(255, 255, 255, 1);
+    padding: 12px 31px;
+    background: rgba(221, 120, 63, 1);
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+}
+
+.button:hover {
+    opacity: 0.8;
+}
+
+.menu {
+    padding: 23px 0;
+}
+
+.menu__list {
+    display: flex;
+    justify-content: space-between; 
+    flex-wrap: wrap;  
+}
+
+.menu__link {
+    font: 14px 'Lora', sans-serif;    
+    line-height: 20px;
+    text-decoration: none;
+    color: rgba(118, 128, 136, 1);
+    padding: 13px 35px;
+}
+
+.menu__item:hover {
+    transform: scale(1.1);
+    transition: all 0.15s;    
+}
+
+.menu__link:hover {
+    color: rgb(40, 59, 56);
+}
+
+.main {
+    background: rgba(247, 247, 247, 1);
+    padding-bottom: 89px;
+}
+
+.featured-posts {
+    padding: 60px 10px 7px 10px;    
+}
+
+.section-title {
+    font: 20px 'Oxygen', sans-serif;    
+    line-height: 27px;
+    letter-spacing: 2px;    
+    color: rgba(46, 46, 46, 1);
+    text-align: center;
+}
+
+.title-decoration {
+    margin: 16px auto 9px auto;
+    width: 188px;
+    height: 1px;
+    border: 0;
+    background-color: rgba(222, 222, 222, 1);
+}
+
+.the-road-ahead {
+    background-image: url(../images/northern-lights.png);
+}
+
+.from-top-down {
+    background-image: url(../images/sky-lanterns.png); 
+    position: relative;   
+}
+
+.featured-posts__content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.featured-post__link {
+    padding: 157px 20px 15px 20px;
+    margin-top: 7px;
+    background-size: cover;
+    border-radius: 3px;
+    max-width: 460px;
+    width: 100%;    
+}
+
+.post__link {
+    text-decoration: none;
+}
+
+.post__link:hover {
+    opacity: 0.85;
+}
+
+.featured-post__title {
+    font: 27px 'Lora', sans-serif;    
+    line-height: 30px;   
+    text-align: left;
+    color: rgba(255, 255, 255, 1);
+}
+
+.featured-post__subtitle {
+    font: 14px 'Oxygen', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 25px;   
+    text-align: left;
+    color: rgba(255, 255, 255, 0.7);
+    padding: 6px 0 12px 0;
+}
+
+.post-button {
+    padding: 6px 9px;    
+    font-size: 12px;
+    line-height: 13px;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.post-information {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.author__icon {
+    width: 26px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.author {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.piblication__information {
+    font:12px 'Oxygen', sans-serif;    
+    line-height: 35px;    
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.most-recent {
+    padding: 60px 12px /*19px*/0 12px;
+}
+
+.most-recent__articles {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.article {
+    max-width: 296px;  
+    margin-bottom: 25px;  
+}
+
+.article__name {
+    min-height: 93px;
+    background-color: rgba(255, 255, 255, 1);
+    padding: 14px 13px 12px 13px;
+    box-shadow: 0 1px 0 rgba(239, 239, 239, 1);
+    margin-bottom: 1px;
+}
+
+.article__img {
+    box-shadow: 0 1px 0 rgba(229, 229, 229, 1);
+    width: 100%;
+}
+
+.article__title {
+    font: 16px 'Lora', sans-serif;    
+    line-height: 21px;   
+    color: rgba(16, 19, 21, 1);
+    padding-bottom: 7px;
+}
+
+.article__subtitle {
+    font: 13px 'Oxygen', sans-serif;    
+    line-height: 19px;
+    color: rgba(122, 122, 122, 1);
+}
+
+.article__footer {
+    display: flex;
+    flex-wrap: wrap;
+    min-height: 48px;
+    align-items: center;
+    background-color: rgba(252, 252, 252, 1);
+    padding: 0 13px;
+    justify-content: space-between;
+}
+
+.article__information {
+    font: 12px 'Oxygen', sans-serif;    
+    line-height: 35px;
+    color: rgba(153, 153, 153, 1);
+    ;
+}
+
+.footer {
+    background-image: url(../images/footer_background.png);
+    background-size: cover;
+    padding: 25px 0;
+}
+
+.link-light {
+    color: rgba(255, 255, 255, 0.6);    
+    font: 11px 'Oxygen', sans-serif; 
+    line-height: 26px;
+    letter-spacing: 1px;
+}
+
+
+
+
+
