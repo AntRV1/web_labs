@@ -45,8 +45,7 @@
 .link {
     font: 12px 'Oxygen', sans-serif;
     line-height: 20px;
-    letter-spacing: 0.6px;
-    /* text-transform: uppercase; */
+    letter-spacing: 0.6px;    
     color: rgba(255, 255, 255, 1);
     padding: 10px 20px;
     text-decoration: none;    
@@ -130,7 +129,7 @@
 }
 
 .featured-posts {
-    padding: 60px 10px 7px 10px;    
+    padding: 60px 0 7px 0;    
 }
 
 .section-title {
@@ -160,13 +159,13 @@
 
 .featured-posts__content {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     flex-wrap: wrap;
 }
 
 .featured-post__link {
     padding: 157px 20px 15px 20px;
-    margin-top: 7px;
+    margin: 7px 10px 0 10px;
     background-size: cover;
     border-radius: 3px;
     max-width: 460px;
@@ -232,18 +231,18 @@
 }
 
 .most-recent {
-    padding: 60px 12px /*19px*/0 12px;
+    padding-top: 60px;
 }
 
 .most-recent__articles {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     flex-wrap: wrap;
 }
 
 .article {
     max-width: 296px;  
-    margin-bottom: 25px;  
+    margin: 0 12px 25px 12px;  
 }
 
 .article__name {
