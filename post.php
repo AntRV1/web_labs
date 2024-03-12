@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="../styles/the-road-ahead_style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora&family=Oxygen&display=swap" rel="stylesheet">
-    <title>Lab_1_2</title>
+    <title>The Road Ahead</title>
 </head>
 
 <body class="body">    
@@ -30,7 +30,7 @@
             <h1 class="main_title">The Road Ahead</h1>
             <p class="epigraph">The road ahead might be paved - it might not be.</p>
         </div>
-        <img class="main_image" src="./images/northern_lights.jpg" alt="Северное сияние">
+        <img class="main_image" src="../images/northern-lights.png" alt="Северное сияние">
         <div class="main_text">
             <div class="main_content container">
                 <p class="text">
