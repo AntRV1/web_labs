@@ -299,7 +299,7 @@
 }
 
 .article__author-name,
-.article__date {
+.article_date {
     font: 12px 'Oxygen', sans-serif;    
     line-height: 35px;
     color: #999999;
