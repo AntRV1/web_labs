@@ -1,5 +1,5 @@
 <div class="article">
-    <a class="article__link post__link" href="<?= $article['link'] ?>">
+    <a class="article__link post__link" title="<?= $article['article_title'] ?>" href="/post?id=<?= $article['id'] ?>">
         <img class="article__img" src="<?= $article['article_image_src'] ?>" alt="<?= $article['article_image-alt'] ?>">
         <div class="article__name">
             <h3 class="article__title"><?= $article['article_title'] ?></h3>
@@ -11,6 +11,6 @@
             <img class="article__icon" src="<?= $article['article_author-avatar'] ?>" alt="<?= $article['article_author-name'] ?>">
             <p class="article__author-name"><?= $article['article_author-name'] ?></p>
         </div>
-        <p class="article_date"><?= $article['article_date'] ?></p>
+        <p class="article_date"><?= $today = date("n/j/Y", $article['article_date']) ?></p>
     </div>
 </div>
