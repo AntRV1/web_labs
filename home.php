@@ -1,7 +1,21 @@
 <?php
+
+function uuid4() {
+    $id = bin2hex(random_bytes(18));
+
+    $id[8] = "-";
+    $id[13] = "-";
+    $id[18] = "-";
+    $id[23] = "-";
+    $id[14] = "4";
+    $id[19] = ["8", "9", "a", "b"][random_int(0, 3)];
+
+    return $id;
+};
+
 $posts = [
  [
-    'id' => 1,
+    'id' => uuid4(),
     'title' => 'The Road Ahead',
     'subtitle' => 'The road ahead might be paved - it might not be.',
     'image_src' => '/static/images/northern-lights.png',
@@ -13,8 +27,7 @@ $posts = [
     'label' => false,
  ],
  [
-   // свойства второго поста
-    'id' => 2,
+    'id' => uuid4(),
     'title' => 'From Top Down',
     'subtitle' => 'Once a year, go someplace you ve never been before.',
     'image_src' => '/static/images/sky-lanterns.png', 
@@ -26,10 +39,11 @@ $posts = [
     'label' => true,
  ],
 ];
-   //Most Recent
+   
+//Most Recent
 $articles = [
 [
-    'id' => 3,
+    'id' => uuid4(),
     'article_image_src' => '/static/images/air-ballons.png',
     'article_image-alt' => 'Воздушные шары',
     'article_title' => 'Still Standing Tall',
@@ -40,7 +54,7 @@ $articles = [
     'link' => '/',
 ],
 [
-    'id' => 4,
+    'id' => uuid4(),
     'article_image_src' => '/static/images/bridge.png',
     'article_image-alt' => 'Мост',
     'article_title' => 'Sunny Side Up',
@@ -51,7 +65,7 @@ $articles = [
     'link' => '/',
 ],
 [
-    'id' => 5,
+    'id' => uuid4(),
     'article_image_src' => '/static/images/lake.png',
     'article_image-alt' => 'Озеро',
     'article_title' => 'Water Falls',
@@ -62,7 +76,7 @@ $articles = [
     'link' => '/',
 ],
 [
-    'id' => 6,
+    'id' => uuid4(),
     'article_image_src' => '/static/images/water.png',
     'article_image-alt' => 'Вода',
     'article_title' => 'Through the Mist',
@@ -73,7 +87,7 @@ $articles = [
     'link' => '/',
 ],
 [
-    'id' => 7,
+    'id' => uuid4(),
     'article_image_src' => '/static/images/fog.png',
     'article_image-alt' => 'Туман',
     'article_title' => 'Awaken Early',
@@ -84,7 +98,7 @@ $articles = [
     'link' => '/',
 ],
 [
-    'id' => 8,
+    'id' => uuid4(),
     'article_image_src' => '/static/images/waterfall.png',
     'article_image-alt' => 'Туман',
     'article_title' => 'Try it Always',
@@ -111,45 +125,24 @@ $articles = [
 </head>
 
 <body class="body">
-    <div class="head">
-        <header class="header">
-            <div class="container running-title">
-                <a class="logo" href="/home">Escape.</a>
-                <nav class="navigation">
-                    <ul class="navigation__list">
-                        <li class="navigation__item"><a class="navigation__link" href="/home">HOME</a></li>
-                        <li class="navigation__item"><a class="navigation__link" href="/">CATEGORIES</a></li>
-                        <li class="navigation__item"><a class="navigation__link" href="/">ABOUT</a></li>
-                        <li class="navigation__item"><a class="navigation__link" href="/">CONTACT</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </header>
-        <div class="about-the-blog container">
-            <h1 class="about-the-blog__title">Let's do it together.</h1>
-            <p class="about-the-blog__subtitle">We travel the world in search of stories. Come along for the ride.</p>  
-            <a class="button" href="/">View Latest Posts</a>  
-        </div>
+    <div class="head">    
+        <?php                    
+            include 'header.php';
+            include 'title_blog.php';
+        ?>        
     </div>
-    <nav class="menu">
-        <ul class="menu__list container">
-            <li class="menu__item"><a class="menu__link" href="/">Nature</a></li>
-            <li class="menu__item"><a class="menu__link" href="/">Photography</a></li>
-            <li class="menu__item"><a class="menu__link" href="/">Relaxation</a></li>
-            <li class="menu__item"><a class="menu__link" href="/">Vacation</a></li>
-            <li class="menu__item"><a class="menu__link" href="/">Travel</a></li>
-            <li class="menu__item"><a class="menu__link" href="/">Adventure</a></li>
-        </ul>
-    </nav>    
+    <?php
+        include 'menu.php';
+    ?>    
     <main class="main">
         <div class="container">
             <section class="featured-posts">
                 <h2 class="section-title">Featured Posts</h2>                
                 <div class="featured-posts__content"> 
                     <?php 
-                    foreach ($posts as $post) {
-                        include 'post_preview.php';
-                    }
+                        foreach ($posts as $post) {
+                            include 'post_preview.php';
+                        }
                     ?>
                 </div>
             </section>
@@ -157,27 +150,17 @@ $articles = [
                 <h2 class="section-title">Most Recent</h2>                
                 <div class="articles__most-recent">
                     <?php 
-                    foreach ($articles as $article) {
-                        include 'article_preview.php';
-                    }
+                        foreach ($articles as $article) {
+                            include 'article_preview.php';
+                        }
                     ?>                   
                 </div>
             </section>             
         </div>        
     </main>
-    <footer class="footer">
-        <div class="container running-title">
-            <a class="logo" href="/home">Escape.</a>
-            <nav class="navigation">
-                <ul class="navigation__list">
-                    <li class="navigation__item"><a class="navigation__link navigation__link_light" href="/home">HOME</a></li>
-                    <li class="navigation__item"><a class="navigation__link navigation__link_light" href="/">CATEGORIES</a></li>
-                    <li class="navigation__item"><a class="navigation__link navigation__link_light" href="/">ABOUT</a></li>
-                    <li class="navigation__item"><a class="navigation__link navigation__link_light" href="/">CONTACT</a></li>
-                </ul>
-            </nav>
-        </div>
-    </footer>     
+    <?php
+        include 'footer.php'
+    ?>
 </body>
 
 </html>
