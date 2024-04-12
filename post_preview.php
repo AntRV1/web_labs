@@ -11,7 +11,7 @@
                     <img class="post-info__icon" src="<?= $post['author_avatar'] ?>" alt="<?= $post['author_name'] ?>">
                     <p class="post-info__author-name"><?= $post['author_name'] ?></p>
                 </div>
-                <p class="post-info__date"><?= $today = date("F j, Y", $post['post_date']); ?></p>
+                <p class="post-info__date"><?= $today = date("F j, Y", $post['publish_date']); ?></p>
             </div>                                
         </div>
     </a>

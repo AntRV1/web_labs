@@ -1,16 +1,17 @@
+
 <div class="article">
-    <a class="article__link post__link" title="<?= $article['article_title'] ?>" href="/post?id=<?= $article['id'] ?>">
-        <img class="article__img" src="<?= $article['article_image_src'] ?>" alt="<?= $article['article_image-alt'] ?>">
+    <a class="article__link post__link" title="<?= $post['title'] ?>" href="/post?id=<?= $post['id'] ?>">
+        <img class="article__img" src="<?= $post['image_src'] ?>" alt="<?= $post['image-alt'] ?>">
         <div class="article__name">
-            <h3 class="article__title"><?= $article['article_title'] ?></h3>
-            <p class="article__subtitle"><?= $article['article_subtitle'] ?></p>
+            <h3 class="article__title"><?= $post['title'] ?></h3>
+            <p class="article__subtitle"><?= $post['subtitle'] ?></p>
         </div>
     </a>
     <div class="article__info">
         <div class="article__author">
-            <img class="article__icon" src="<?= $article['article_author-avatar'] ?>" alt="<?= $article['article_author-name'] ?>">
-            <p class="article__author-name"><?= $article['article_author-name'] ?></p>
+            <img class="article__icon" src="<?= $post['author_avatar'] ?>" alt="<?= $post['author_name'] ?>">
+            <p class="article__author-name"><?= $post['author_name'] ?></p>
         </div>
-        <p class="article_date"><?= $today = date("n/j/Y", $article['article_date']) ?></p>
+        <p class="article_date"><?= $today = date("n/j/Y", $post['publish_date']) ?></p>
     </div>
 </div>
