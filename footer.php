@@ -13,10 +13,10 @@ $footer = [
 <footer class="footer">
     <div class="container footer__feedback">
         <h3 class="footer__title"><?= $footer['footer_title'] ?></h3>
-        <form class="footer__input-win">
+        <form class="footer__field">
             <input class="footer__email" type="email" placeholder="Enter your email address">
             <!-- <a class="footer__button" href="/"><?= $footer['footer_button_name'] ?></a> -->
-            <button class="footer__button" href="/"><?= $footer['footer_button_name'] ?></butto>
+            <button class="footer__button" type="submit" href="/"><?= $footer['footer_button_name'] ?></butto>
         </form>
     </div>
     <div class="footer__bar">    

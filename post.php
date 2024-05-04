@@ -4,7 +4,7 @@ $postid = $_GET['id'];
 include 'database_connect.php';
 $conn = createDBConnection();
 // экранировать postid
-$sql = 'SELECT * FROM post WHERE id="' . $postid . '"'; 
+$sql = "SELECT * FROM post WHERE id = $postid"; 
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {    
     $row = $result->fetch_assoc();
@@ -78,9 +78,9 @@ if ($result->num_rows > 0) {
         include 'header.php';
     ?>    
     <main>       
-        <div class=" main_title_block container">
+        <div class="main_title_block container">
             <h1 class="main_title"><?= $row['title'] ?></h1>
-            <p class="epigraph"><?= $row['subtitle'] ?></p>
+            <p class="main_subtitle"><?= $row['subtitle'] ?></p>
         </div>
         <img class="main_image" src="<?= $row['image_src'] ?>" alt="<?= $row['image_alt'] ?>">
         <div class="main_text">

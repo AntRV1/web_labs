@@ -65,7 +65,7 @@
     padding-bottom: 20px;    
 }
 
-.epigraph {
+.main_subtitle {
     font: 17px 'Oxygen', sans-serif;
     line-height: 20px;       
 }
@@ -121,7 +121,7 @@
     position: absolute;
 }
 
-.footer__input-win {
+.footer__field {
     display: flex;
     max-width: 500px;
     width: 100%;
