@@ -40,66 +40,69 @@
                     <div class="form__upload">
                         <div class="form__field_wrapper">
                             <label for="title" class="form__label">Title</label>
-                            <input type="text" class="form__field" id="title">
-                            <!-- <p class="login-form__wrapper_error-msg" id="error-msg">Error</p> -->
+                            <input type="text" class="form__field" onclick="checkInput(), errorMessage(), sendValueTitle()" id="title" required>
+                            <p class="form__error-msg hide" id="title-error">Title is required.</p>
                         </div>
                         <div class="form__field_wrapper">
                             <label for="subtitle" class="form__label">Short description</label>
-                            <input type="text" class="form__field" id="subtitle">
-                            <!-- <p class="login-form__wrapper_error-msg" id="error-msg">Error</p> -->
+                            <input type="text" class="form__field" onclick="checkInput(), errorMessage(), sendValueSubtitle()" id="subtitle" required>
+                            <p class="form__error-msg hide" id="subtitle-error">Short description is required.</p>
                         </div>
                         <div class="form__field_wrapper">
                             <label for="author-name" class="form__label">Author name</label>
-                            <input type="text" class="form__field" id="author-name">
-                            <!-- <p class="login-form__wrapper_error-msg" id="error-msg">Error</p> -->
+                            <input type="text" class="form__field" onclick="checkInput(), errorMessage(), sendValueAuthorName()" id="author-name" required>
+                            <p class="form__error-msg hide" id="author-name-error">Author name is required.</p>
                         </div>
                         <div class="form__field_wrapper">
                             <label for="avatar-box" class="form__label">Author photo</label>
                             <div class="form__avatar_wrapper">
                                 <label for="avatar-box" class="form__avatar-upload">
-                                    <input type="file" class="hide" id="avatar-box" onchange="uploadAvatar()" accept=".png, .jpg, .jpeg, .gif">
-                                    <!-- <div class="form__icon">
-                                        <img src="../images/icon/camera.png" class="form__icon-img">                                    
-                                    </div> -->
+                                    <input type="file" class="hide" id="avatar-box" onchange="uploadAvatar()" onclick="removeAvatar()" accept=".png, .jpg, .jpeg, .gif">
                                     <img class="form__image avatar hide" src="" id="avatar">
-                                    <!-- <p class="form__icon-name avatar-name">Upload</p>                                 -->
                                 </label>
-                                <label for="avatar-box" class="form__avatar-update">Upload</label>                                
+                                <label for="avatar-box" class="form__avatar-update" id="avatar-upload">Upload</label> 
+                                <label for="avatar-box" class="form__new-img hide" id="avatar-new">Upload New</label>
+                                <button type="button" class="form__remove-img hide" id="avatar-remove">Remove</button>                               
                             </div>
-                            <!-- <p class="login-form__wrapper_error-msg" id="error-msg">Error</p> -->
                         </div>
                         <div class="form__field_wrapper">
                             <label for="date" class="form__label">Publish date</label>
-                            <input type="date" class="form__field date" id="date">
-                            <!-- <p class="login-form__wrapper_error-msg" id="error-msg">Error</p> -->
-                        </div>
+                            <input type="date" class="form__field date" onclick="checkInput(), errorMessage(), sendValueDate()" id="date" required>
+                            <p class="form__error-msg hide" id="date-error">Publish date is required.</p>
+                        </div>                 
                         <div class="form__field_wrapper">
                             <label for="big-image-box" class="form__label">Hero image</label>
                             <label for="big-image-box" class="form__img-upload big" id="big-image-label">
-                                <input type="file" class="hide" id="big-image-box" onchange="uploadArtImg()" accept=".png, .jpg, .jpeg, .gif">
+                                <input type="file" class="hide" id="big-image-box" onchange="uploadArtImg()" onclick="removeArtImg()" accept=".png, .jpg, .jpeg, .gif">
                                 <div class="form__icon">
                                     <img src="../images/icon/camera.png" class="form__icon-img">
                                     <p class="form__icon-name">Upload</p>
                                 </div>
                                 <img class="form__image hide" src="" id="big-image">                                
                             </label>                            
-                            <p class="form__description">Size up to 10mb. Format: png, jpeg, gif.</p>
-                            <!-- <p class="login-form__wrapper_error-msg" id="error-msg">Error</p> -->
+                            <p class="form__description" id="big-image-description">Size up to 10mb. Format: png, jpeg, gif.</p>
+                            <div class="form__image-upd-wrapper">
+                                <label for="big-image-box" class="form__new-img hide" id="big-image-new">Upload New</label>
+                                <button type="button" class="form__remove-img hide" id="big-image-remove">Remove</button>
+                            </div>
                         </div>
                         <div class="form__field_wrapper">
                             <label for="small-image-box" class="form__label">Hero image</label>
                             <label for="small-image-box" class="form__img-upload small">
-                                <input type="file" class="hide" id="small-image-box" onchange="uploadCardImg()" accept=".png, .jpg, .jpeg, .gif">
+                                <input type="file" class="hide" id="small-image-box" onchange="uploadCardImg()" onclick="removeCardImg()" accept=".png, .jpg, .jpeg, .gif">
                                 <div class="form__icon">
                                     <img src="../images/icon/camera.png" class="form__icon-img">
                                     <p class="form__icon-name">Upload</p>
                                 </div>
                                 <img class="form__image hide" src="" id="small-image">
                             </label>
-                            <p class="form__description">Size up to 5mb. Format: png, jpeg, gif.</p>
-                            <!-- <p class="login-form__wrapper_error-msg" id="error-msg">Error</p> -->
+                            <p class="form__description" id="small-image-description">Size up to 5mb. Format: png, jpeg, gif.</p>
+                            <div class="form__image-upd-wrapper">
+                                <label for="small-image-box" class="form__new-img hide" id="small-image-new">Upload New</label>
+                                <button type="button" class="form__remove-img hide" id="small-image-remove">Remove</button>
+                            </div>
                         </div>
-                    </div>
+                    </div>                  
                     <div class="form__preview">
                         <div class="form__article">
                             <h3 class="form__preview_title">Article preview</h3>
@@ -113,8 +116,8 @@
                                         </button>
                                     </span>
                                     <div class="form__article_title-block">
-                                        <h4 class="form__article_title">New Post</h4>
-                                        <p class="form__article_subtitle">Please, enter any description</p>
+                                        <h4 class="form__article_title" id="article-title">New Post</h4>
+                                        <p class="form__article_subtitle" id="article-subtitle">Please, enter any description</p>
                                     </div>
                                     <div class="form__preview_img article" id="article-img">
                                         <img class="form__image hide" src="" id="article-image">
@@ -130,17 +133,17 @@
                                         <img class="form__image hide" src="" id="card-image">
                                     </div>
                                     <div class="form__post_title-block">
-                                        <h4 class="form__post_title">New Post</h4>
-                                        <p class="form__post_subtitle">Please, enter any description</p>
+                                        <h4 class="form__post_title" id="card-title">New Post</h4>
+                                        <p class="form__post_subtitle" id="card-subtitle">Please, enter any description</p>
                                     </div>
                                     <div class="form__post_info">
                                         <div class="form__post_author">
                                             <div class="form__author-avatar">
                                                 <img class="form__image avatar hide" src="" id="card-avatar">
                                             </div>
-                                            <p class="form__author-name">Enter author name</p>
+                                            <p class="form__author-name" id="card-author-name">Enter author name</p>
                                         </div>
-                                        <p class="form__publish-date">4/19/2023</p>
+                                        <p class="form__publish-date" id="card-date">4/19/2023</p>
                                     </div>
                                 </div>
                             </div>
