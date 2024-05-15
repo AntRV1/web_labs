@@ -375,7 +375,16 @@
     letter-spacing: 1px;
 }
 
+.hide {
+    display: none;
+}
 
+.invalid {
+    border-bottom: 2px solid #E86961;    
+}
 
-
+.login-form__wrapper_error-msg {
+    font:12px/16px 'Oxygen', sans-serif;
+    color: #E86961;
+}
 

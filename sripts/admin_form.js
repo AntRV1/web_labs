@@ -1,6 +1,6 @@
 //Проверка полей
 
-function checkInput() {
+function checkInput() {//valid
   let field = document.querySelectorAll('.form__field');
   
   field.forEach(field => {
@@ -10,14 +10,13 @@ function checkInput() {
       
       if(str.length >= 3) {
         field.classList.add('valid');
-        if(field.classList.contains('invalid')) {
-          field.classList.remove('invalid');          
-        };            
+
+        field.classList.remove('invalid');          
+          
       } else {
           field.classList.add('invalid');
-          if(field.classList.contains('valid')) {
-            field.classList.remove('valid');
-          }; 
+
+          field.classList.remove('valid');
       };
       
       if(field.value.length > 0) {
@@ -84,20 +83,6 @@ function errorMessage() {
 }
 
 //Загрузка изображений
-
-// function downloadFile(input) {
-//   let preview = document.querySelector("#big-image");
-//   let file = input.files[0];
-//   let reader = new FileReader();
-//   reader.readAsDataURL(file);
-  
-//   reader.onload = function () {
-//     let img = document.createElement('img');
-//     img.className = 'form__image';
-//     preview.appendChild(img);
-//     img.src = reader.result;
-//   }
-// }
 
 function uploadAvatar() {
   const preview = document.getElementById('avatar');
@@ -197,7 +182,7 @@ function removeAvatar() {
   });
 };
 
-function removeArtImg() {
+function removeArtImg() { //Article
   const preview = document.getElementById('big-image');
   const remove = document.getElementById('big-image-remove');
   const newImg = document.getElementById('big-image-new');
@@ -245,7 +230,7 @@ function sendValueTitle() {
     let str = title.value.trim();
     if(str.length >= 3) {
       articleTitle.innerHTML = str;
-      cardTitle.innerHTML = str;
+      cardTitle.innerHTML = str;      
     } else {
         articleTitle.innerHTML = defaultTitle;
         cardTitle.innerHTML = defaultTitle;
@@ -283,18 +268,24 @@ function sendValueAuthorName() {
     } else {
         cardname.innerHTML = defaultName;
     };
-  }); 
+  });
 };
 
 function sendValueDate() {
-  let date = document.getElementById('date');
+  let publishDate = document.getElementById('date');
   let cardDate = document.getElementById('card-date');
   const defaultDate = "4/19/2023";
 
   date.addEventListener('blur', () => {
-    let str = date.value.trim();
-    if(str.length >= 3) {
-      cardDate.innerHTML = str;
+    let today = new Date();
+    // let today = Date.parse(publishDate.value);
+    userDate = [today.getMonth() + 1, [today.getDate(), today.getFullYear()].map(n => n < 10 ? '0' + n : '' + n).join('/')].join('/');
+    // console.log(today);
+    // console.log(userDate);
+    // console.log(publishDate.value);
+    let str = publishDate.value;
+    if(str.length > 0) {
+      cardDate.innerHTML = userDate;
     } else {
         cardDate.innerHTML = defaultDate;
     };
@@ -302,4 +293,113 @@ function sendValueDate() {
 };
 
 // Валидация
+// const form = document.getElementById('form');
 
+// function checkForm(form) {  
+//   form.preventDefault();
+//   // console.log('fdgvfd');
+//   const formCorrect = document.getElementById('correct');
+//   const formWrong = document.getElementById('wrong');
+//   const submit = document.getElementById('submit');
+
+//   let title = document.getElementById('title');
+//   let subtitle = document.getElementById('subtitle');
+//   let authorName = document.getElementById('author-name');
+//   let avatar = document.getElementById('avatar');
+//   let date = document.getElementById('date');
+//   let bigImage = document.getElementById('big-image');
+//   let smallImage = document.getElementById('small-image');
+//   let content = document.getElementById('textarea');
+  
+
+//   let titleOk = Boolean;
+//   let subtitleOk = Boolean;
+//   let authorNameOk = Boolean;
+//   let dateOk = Boolean;
+//   let avatarOk = Boolean;
+//   let bigImageOk = Boolean;
+//   let contentOk = Boolean;
+
+//   // let titleVal = "";
+//   // let subtitleVal = "";
+//   // let authorNameVal = "";
+//   // let dateVal = "";
+//   // let avatarVal = "";
+//   // let bigImageVal = "";
+//   // let contentVal = "";
+
+   
+//   if(title.value.trim().length >= 3) {
+//     let titleVal = title.value.trim();
+//     titleOk = true;
+//     // console.log(titleVal);
+//   } else {
+//       titleOk = false;
+//   };
+//   if(subtitle.value.trim().length >= 3) {
+//     let subtitleVal = subtitle.value.trim();
+//     subtitleOk = true;
+//     // console.log(subtitleVal);
+//   } else {
+//       subtitleOk = false;
+//   };
+//   if(authorName.value.trim().length >= 3) {
+//     let authorNameVal = authorName.value.trim();
+//     authorNameOk = true;
+//     // console.log(authorNameVal);
+//   } else {
+//       authorNameOk = false;
+//   };
+//   if(date.value.length >= 3) {
+//     let dateiVal = date.value;
+//     dateOk = true;
+//     // console.log(date.value);
+//   } else {
+//       dateOk = false;
+//   };
+//   if(avatar.src.length >= 10) {
+//     let avatarVal = avatar.src;
+//     avatarOk = true
+//     // console.log(avatarVal);
+//   } else {
+//       avatarOk = false;
+//   };
+//   if(bigImage.src.length >= 10) {
+//     let bigImageVal = bigImage.src;
+//     bigImageOk = true;
+//     // console.log(bigImageVal);
+//   } else {
+//       bigImageOk = false;
+//   };
+//   if(content.value.trim().length >= 10) {
+//     let contentVal = content.value.trim();
+//     contentOk = true;
+//     // console.log(contentVal);
+//   } else {
+//       contentOk = false;
+//   };  
+  
+//   if((titleOk = true) && (subtitleOk = true) && (authorNameOk = true) && (dateOk = true) && (avatarOk = true) && (bigImageOk = true) && (contentOk = true)) {
+//     formCorrect.classList.remove('hide');
+//     formWrong.classList.add('hide');
+//     console.log('ok');
+//   } else {
+//     formCorrect.classList.add('hide');
+//     formWrong.classList.remove('hide');
+//     console.log('!!!');
+//   };
+
+// }; 
+
+// // "image":
+// // "title": "New post",
+// // "subtitle": "Very new post.",
+// // "author_name": "William Wong",
+// // "author_avatar": "/static/images/olga-moiseeva.jpg",
+// // "publish_date": "1443176990",
+// // "image_src": "/static/images/fox.png",
+// // "image_alt": "Лиса",
+// // "content": "New content",
+// // "featured": "0",
+// // "most_recent": "1",
+// // "label": "0"

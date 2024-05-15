@@ -8,12 +8,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/styles/creating_post.css">
+    <link rel="stylesheet" href="/static/styles/admin_form.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora&family=Oxygen&display=swap" rel="stylesheet"> 
-    <script src="./sripts/creating_post.js" async></script>   
-    <title>Creating post</title>
+    <script src="./sripts/admin_form.js" async></script>   
+    <title>Admin form</title>
 </head>
 <body class="body">
     <header class="header">
@@ -31,9 +31,17 @@
                 <h1 class="main__title">New Post</h1>
                 <p class="main__subtitle">Fill out the form bellow and publish your article</p>
             </span>
-            <button class="main__button-submit">Publish</button>
+            <button form="form" type="submit" class="main__button-submit" id="submit">Publish</button>
         </div>
-        <form action="" class="form">
+        <div class="main__error hide" id="wrong">
+            <img src="images/icon/alert-circle.png" alt="">
+            <p class="main__message">Whoops! Some fields need your attention :o</p>
+        </div>
+        <div class="main__ok hide" id="correct">
+            <img src="images\icon\check-circle.png" alt="">
+            <p class="main__message">Publish Complete!</p>
+        </div>
+        <form action="" class="form" id="form" onsubmit="checkForm(event)">
             <div class="form__info">
                 <h2 class="form__title">Main Information</h2>
                 <span class="form__wrapper">
@@ -66,7 +74,7 @@
                             </div>
                         </div>
                         <div class="form__field_wrapper">
-                            <label for="date" class="form__label">Publish date</label>
+                            <label for="date" class="form__label">Publish date</label>                            
                             <input type="date" class="form__field date" onclick="checkInput(), errorMessage(), sendValueDate()" id="date" required>
                             <p class="form__error-msg hide" id="date-error">Publish date is required.</p>
                         </div>                 
@@ -154,7 +162,7 @@
             <div class="form__content">
                 <h2 class="form__title">Content</h2>
                 <label class="form__label" for="textarea">Post content (plain text)</label>
-                <textarea type="text" class="form__textarea" id="textarea" placeholder="Type anything you want ..."></textarea>
+                <textarea type="text" class="form__textarea" id="textarea" placeholder="Type anything you want ..." required></textarea>
             </div>
         </form>
     </main>

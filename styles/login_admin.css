@@ -63,11 +63,7 @@
    margin-bottom: 50px;
 }
 
-.login-form__error-hide {
-    display: none;
-}
-
-.login-form__error-show {    
+.login-form__error {    
     display: flex;
     flex-wrap: wrap;
     align-items: center;    
@@ -79,6 +75,10 @@
     margin-bottom: 40px;
     font: 14px/20px 'Oxygen', sans-serif;
     color: #2E2E2E;
+}
+
+.hide {
+    display: none;
 }
 
 .login-form__error-icon {
@@ -104,13 +104,22 @@
     border: 0;
     border-bottom: 1px solid #DEDEDE;
     width: 100%;
+    margin-bottom: 5px;
 }
 
 .login-form__field:focus,
-.active {
+.valid {
     outline: none;
     background-color: #F7F7F7;
     border-bottom: 1px solid #2E2E2E;    
+}
+
+.invalid {
+    border-bottom: 1px solid #E86961;
+}
+
+.not-empty {
+    background-color: #F7F7F7;
 }
 
 .login-form__icon {    
@@ -124,25 +133,24 @@
     cursor: pointer;
 }
 
-.hide,
-.show {
+.hide-button,
+.show-button {
     background-size: 22px;
     background-repeat: no-repeat;
     background-position: center;
 }
 
-.hide {
+.hide-button {
     background-image: url(../images/icon/eye.png);
 }
 
-.show {
+.show-button {
     background-image: url(../images/icon/eye-off.png);
 }
 
 .login-form__wrapper_error-msg {
     font:12px/16px 'Oxygen', sans-serif;
     color: #E86961;
-
 }
 
 .login-form__button {    
