@@ -77,7 +77,7 @@ function onArticleImageChange(event) {
   const file = event.target.files[0];
 
   readFileAsBase64(file, (result) => {
-    postData.articleImage = result;
+    postData.articleImage = result;   
 
     invalidatePostPreview();
   });
@@ -247,20 +247,20 @@ function validateForm(event) {
 };
 
 async function addPost() {
-  const newPost = {
-    image: postData.articleImage,
+  const newPost = { 
+    image: postData.articleImage.replace(/jpeg|png/g, postData.title.replace(/\s/g, '-')+'.jpg'),    
     // photo: postData.authorPhoto,
     title: postData.title,
     subtitle: postData.subtitle,
     author_name: postData.authorName,
-    author_avatar: '"/static/images/'+postData.authorName.replace(/\s/g, '-')+'.jpeg",',
+    author_avatar: '/static/images/'+postData.authorName.replace(/\s/g, '-')+'.jpg',
     publish_date: postData.publishDate,
-    image_src: '"/static/images/'+postData.title.replace(/\s/g, '-')+'.jpeg",',
+    image_src: '/static/images/'+postData.title.replace(/\s/g, '-')+'.jpg',
     image_alt: postData.title,
     content: postData.content,
     featured: '0',
     most_recent: '1',
-    label: '0',
+    label: '0',    
   }
 
   let response = await fetch('/api.php', {
@@ -270,8 +270,6 @@ async function addPost() {
     },
     body: JSON.stringify(newPost)
   });  
-
-  console.log(newPost);  
 };
 
 function initEventListeners() {

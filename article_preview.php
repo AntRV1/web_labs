@@ -1,7 +1,9 @@
 
 <div class="article">
     <a class="article__link post__link" title="<?= $post['title'] ?>" href="/post?id=<?= $post['id'] ?>">
-        <img class="article__img" src="<?= $post['image_src'] ?>" alt="<?= $post['image-alt'] ?>">
+        <div class="article__img-wrapper">
+            <img class="article__img" src="<?= $post['image_src'] ?>" alt="<?= $post['image_alt'] ?>">
+        </div>
         <div class="article__name">
             <h3 class="article__title"><?= $post['title'] ?></h3>
             <p class="article__subtitle"><?= $post['subtitle'] ?></p>
