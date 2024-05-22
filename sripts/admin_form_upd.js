@@ -248,8 +248,10 @@ function validateForm(event) {
 
 async function addPost() {
   const newPost = { 
-    image: postData.articleImage.replace(/jpeg|png/g, postData.title.replace(/\s/g, '-')+'.jpg'),    
-    // photo: postData.authorPhoto,
+    // image: postData.articleImage.replace(/jpeg|png/g, postData.title.replace(/\s/g, '-')+'.jpg'),
+    // photo: postData.authorPhoto.replace(/jpeg|png/g, postData.authorName.replace(/\s/g, '-')+'.jpg'),
+    image: postData.articleImage,
+    photo: postData.authorPhoto,
     title: postData.title,
     subtitle: postData.subtitle,
     author_name: postData.authorName,
@@ -262,14 +264,14 @@ async function addPost() {
     most_recent: '1',
     label: '0',    
   }
-
-  let response = await fetch('/api.php', {
+ 
+  let response = await fetch('/api-new.php', {
     method: 'POST',
     headers: {
       'Content-Type': 'aplication/json;charset=utf-8'
     },
     body: JSON.stringify(newPost)
-  });  
+  });
 };
 
 function initEventListeners() {

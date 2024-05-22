@@ -3,7 +3,7 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 function saveFile(string $file, string $data): void {
     $myFile = fopen($file, 'w');
-    if ( !$myFile ) {
+    if (!$myFile) {
         echo 'Произошла ошибка при открытии файла'."\n";
         return;
     }
@@ -18,15 +18,15 @@ function saveFile(string $file, string $data): void {
     fclose($myFile);
 }
 
-function saveImage(string $imageBase64) {
+function saveImage(string $imageName, string $imageBase64) {
     $imageBase64Array = explode(';base64,', $imageBase64);
     $imgExtention = str_replace('data:image/', '', $imageBase64Array[0]);
     $imageDecoded = base64_decode($imageBase64Array[1]);
 
-    saveFile("images/{$imgExtention}", $imageDecoded);
+    saveFile("images/{$imageName}.{$imgExtention}", $imageDecoded);
 }
 
-include 'database_connect.php';
+include 'database_function.php';
 $conn = createDBConnection();
 
 if ($method === 'POST') {
@@ -44,7 +44,8 @@ if ($method === 'POST') {
     $most_recent = $dataAsArray['most_recent'];
     $label = $dataAsArray['label'];
 
-    saveImage($dataAsArray['image']);
+    saveImage($title, $dataAsArray['image']);
+    saveImage($author_name, $dataAsArray['photo']);
 
     // $sql = "INSERT INTO post (title, subtitle, author_name, author_avatar, publish_date, image_src, content, featured) 
     // VALUES ('$title', '$subtitle', '$author_name', '$author_avatar', '$publish_date', '$image_src', '$content', '$featured')";

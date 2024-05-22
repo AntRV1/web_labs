@@ -1,6 +1,6 @@
 <?php
 
-include 'database_connect.php';
+include 'database_function.php';
 $conn = createDBConnection();
 
 $sql = "SELECT * FROM post";
@@ -24,7 +24,7 @@ if ($result->num_rows > 0) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora&family=Oxygen&display=swap" rel="stylesheet">
-    <script src="./sripts/home.js" async></script>
+    <script src="./sripts/home.js"></script>
     <title>Blog home page</title>
 </head>
 

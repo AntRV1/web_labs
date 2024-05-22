@@ -1,7 +1,7 @@
 <?php
 $postid = $_GET['id'];
 
-include 'database_connect.php';
+include 'database_function.php';
 $conn = createDBConnection();
 // экранировать postid
 $sql = "SELECT * FROM post WHERE id = $postid"; 
@@ -69,6 +69,7 @@ if ($result->num_rows > 0) {
     <link rel="stylesheet" href="/static/styles/post.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="./sripts/post.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Lora&family=Oxygen&display=swap" rel="stylesheet">
     <title><?= $row['title'] ?> id=<?= $postid ?></title>
 </head>

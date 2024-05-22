@@ -10,12 +10,12 @@
 ?>
 
 <nav class="menu">
-    <ul class="menu__list container">
+    <ul class="menu__list container mobile-container">                   
         <li class="menu__item"><a class="menu__link" href="/"><?= $link['link_nature_name'] ?></a></li>
         <li class="menu__item"><a class="menu__link" href="/"><?= $link['link_photography_name'] ?></a></li>
         <li class="menu__item"><a class="menu__link" href="/"><?= $link['link_relaxation_name'] ?></a></li>
         <li class="menu__item"><a class="menu__link" href="/"><?= $link['link_vacation_name'] ?></a></li>
         <li class="menu__item"><a class="menu__link" href="/"><?= $link['link_travel_name'] ?></a></li>
-        <li class="menu__item"><a class="menu__link" href="/"><?= $link['link_adventure_name'] ?></a></li>
+        <li class="menu__item"><a class="menu__link" href="/"><?= $link['link_adventure_name'] ?></a></li>                   
     </ul>
 </nav>
