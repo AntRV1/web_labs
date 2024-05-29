@@ -108,3 +108,9 @@ function checkForm(form, emailReady) {
       };            
   };
 };
+
+function initEventListeners() {
+
+};
+
+initEventListeners();

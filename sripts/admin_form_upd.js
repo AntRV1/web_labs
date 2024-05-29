@@ -16,6 +16,7 @@ const defaultAuthorName = 'Enter author name';
 const defaultPublishDate = '4/19/2023';
 const defaultImageSrc = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAPCAIAAABbdmkjAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAAmSURBVChTY/hONBh4pd++fYMyv3/Hzx5S3oLSRAAaKR3YcP3+HQDVIV/h+NFFAwAAAABJRU5ErkJggg==';
 
+const logout = document.getElementById('logout');
 const title = document.getElementById('title');
 const subtitle = document.getElementById('subtitle');
 const authorName = document.getElementById('author-name');
@@ -41,9 +42,29 @@ const validForm = document.getElementById('correct');
 
 const field = document.querySelectorAll('.form__field');
 
-const postPreview = {
-  title: document.getElementById('')
-}
+// const colors = ['#f51414', '#f514b5', '#b914f5', '#5014f5', '#146ef5', 
+//   '#14c0f5', '#14f5f5', '#14f588', '#14f544', '#32f514', '#75f514', 
+//   '#9ef514', '#d7f514', '#f5de14', '#f5aa14', '#f57114', '#f54814'];
+
+// randomColor = (max) => {
+//   return Math.floor(Math.random() * (max + 1));
+// },
+
+// setRandomColor = () => {
+//   const color = colors[randomColor(colors.length - 1)];
+//   const logo = document.getElementById('logo');
+
+//   console.log(color);
+//   logo.style.backgroundColor = color;
+// }
+
+const logo = document.getElementById('logo');
+
+let r = Math.floor(Math.random()*256);
+    g = Math.floor(Math.random()*256);
+    b = Math.floor(Math.random()*256);
+
+logo.style.backgroundColor ="rgb("+r+", "+g+", "+b+")";
 
 function onTitleChange(event) {
   postData.title = event.target.value.trim();  
@@ -66,32 +87,47 @@ function onAuthorNameChange(event) {
 function onAuthorPhotoChange(event) {
   const file = event.target.files[0];
 
-  readFileAsBase64(file, (result) => {
-    postData.authorPhoto = result;
+  if((file.type == 'image/jpeg') 
+    || (file.type == 'image/jpg')
+    || (file.type == 'image/png')
+    || (file.type == 'image/gif')) {
+    readFileAsBase64(file, (result) => {
+      postData.authorPhoto = result;
 
-    invalidatePostPreview();
-  });
+      invalidatePostPreview();
+    });
+  }
 };
 
 function onArticleImageChange(event) {
   const file = event.target.files[0];
 
-  readFileAsBase64(file, (result) => {
-    postData.articleImage = result;   
+  if((file.type == 'image/jpeg') 
+    || (file.type == 'image/jpg')
+    || (file.type == 'image/png')
+    || (file.type == 'image/gif')) {
+    readFileAsBase64(file, (result) => {
+      postData.articleImage = result;   
 
-    invalidatePostPreview();
-  });
+      invalidatePostPreview();
+    });
+  }
 };
 
 function onCardImageChange(event) {
   const file = event.target.files[0];
-  const removeAuthorPhoto = document.getElementById('avatar-remove');
+  
+  if((file.type == 'image/jpeg') 
+    || (file.type == 'image/jpg')
+    || (file.type == 'image/png')
+    || (file.type == 'image/gif')) {
+    readFileAsBase64(file, (result) => {
+      postData.cardImage = result;
+      console.log(postData.cardImage) ;     
 
-  readFileAsBase64(file, (result) => {
-    postData.cardImage = result;
-
-    invalidatePostPreview();
-  });
+      invalidatePostPreview();
+    });
+  } 
 };
 
 function removePhoto(event) {
@@ -248,21 +284,13 @@ function validateForm(event) {
 
 async function addPost() {
   const newPost = { 
-    // image: postData.articleImage.replace(/jpeg|png/g, postData.title.replace(/\s/g, '-')+'.jpg'),
-    // photo: postData.authorPhoto.replace(/jpeg|png/g, postData.authorName.replace(/\s/g, '-')+'.jpg'),
     image: postData.articleImage,
     photo: postData.authorPhoto,
     title: postData.title,
     subtitle: postData.subtitle,
-    author_name: postData.authorName,
-    author_avatar: '/static/images/'+postData.authorName.replace(/\s/g, '-')+'.jpg',
-    publish_date: postData.publishDate,
-    image_src: '/static/images/'+postData.title.replace(/\s/g, '-')+'.jpg',
-    image_alt: postData.title,
-    content: postData.content,
-    featured: '0',
-    most_recent: '1',
-    label: '0',    
+    author_name: postData.authorName,    
+    publish_date: postData.publishDate,     
+    content: postData.content,       
   }
  
   let response = await fetch('/api-new.php', {
@@ -272,6 +300,12 @@ async function addPost() {
     },
     body: JSON.stringify(newPost)
   });
+
+  console.log(response.ok);
+};
+
+async function exitForm() {
+  let response = await fetch('/api-logout.php');
 };
 
 function initEventListeners() {
@@ -287,6 +321,7 @@ function initEventListeners() {
   publishDate.addEventListener('change', onPublishDateChange);
   content.addEventListener('blur', onContentChange);
   form.addEventListener('submit', validateForm);
+  logout.addEventListener('click', exitForm)
 }  
   
 function invalidatePostPreview() {
@@ -369,3 +404,6 @@ initEventListeners();
 invalidatePostPreview();
 checkInput();
 errorMessage();
+
+
+//

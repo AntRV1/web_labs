@@ -1,3 +1,17 @@
+<?php
+    session_name('auth');
+    session_start();
+
+    if (!$_SESSION['id']) {
+        header("Location: login_admin_upd.php");
+    }
+    
+    $let = strtoupper(substr($_SESSION['name'], 0, 1));
+
+    echo $_SESSION['id'];
+    echo ' '.$_SESSION['name'].' ';
+    echo $let;
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,8 +30,8 @@
         <div class="container running-title">
             <a class="header__logo" href="/creating_post">Escape.</a>
             <div class="header__menu">
-                <button class="header__navigation">N</button>
-                <button class="header__out-button"></button>
+                <button class="header__navigation" id="logo"><?= $let ?></button>
+                <button class="header__out-button" id="logout"></button>
             </div>  
         </div>
     </header>
@@ -44,17 +58,17 @@
                     <div class="form__upload">
                         <div class="form__field_wrapper">
                             <label for="title" class="form__label">Title</label>
-                            <input type="text" class="form__field" id="title" >
+                            <input type="text" class="form__field" id="title" maxlength="255">
                             <p class="form__error-msg hide" id="title-error">Title is required.</p>
                         </div>
                         <div class="form__field_wrapper">
                             <label for="subtitle" class="form__label">Short description</label>
-                            <input type="text" class="form__field" id="subtitle" >
+                            <input type="text" class="form__field" id="subtitle" maxlength="255">
                             <p class="form__error-msg hide" id="subtitle-error">Short description is required.</p>
                         </div>
                         <div class="form__field_wrapper">
                             <label for="author-name" class="form__label">Author name</label>
-                            <input type="text" class="form__field" id="author-name" >
+                            <input type="text" class="form__field" id="author-name" maxlength="255">
                             <p class="form__error-msg hide" id="author-name-error">Author name is required.</p>
                         </div>
                         <div class="form__field_wrapper">

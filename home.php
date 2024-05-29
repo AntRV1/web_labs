@@ -1,17 +1,8 @@
 <?php
 
 include 'database_function.php';
-$conn = createDBConnection();
 
-$sql = "SELECT * FROM post";
-$result = $conn->query($sql);
-$posts = [];
-
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        array_push($posts, $row);
-    }
-}
+$posts = getPreviewByID();
 ?>
 
 <!DOCTYPE html>
