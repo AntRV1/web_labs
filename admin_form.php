@@ -1,7 +1,16 @@
 <?php
+    session_name('auth');
+    session_start();
 
+    if (!$_SESSION['id']) {
+        header("Location: login_admin_upd.php");
+    }
+    
+    $letter = isset($_SESSION['name']) && strlen($_SESSION['name']) > 0
+        ? $_SESSION['name'][0]
+        : 'N';
+    $let = strtoupper($letter);
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,8 +29,8 @@
         <div class="container running-title">
             <a class="header__logo" href="/creating_post">Escape.</a>
             <div class="header__menu">
-                <button class="header__navigation">N</button>
-                <button class="header__out-button"></button>
+                <button class="header__navigation" id="logo"><?= $let ?></button>
+                <button class="header__out-button" id="logout"></button>
             </div>  
         </div>
     </header>
@@ -41,31 +50,31 @@
             <img src="images\icon\check-circle.png" alt="">
             <p class="main__message">Publish Complete!</p>
         </div>
-        <form action="" class="form" id="form" onsubmit="checkForm(event)">
+        <form action="" class="form" id="form">
             <div class="form__info">
                 <h2 class="form__title">Main Information</h2>
                 <span class="form__wrapper">
                     <div class="form__upload">
                         <div class="form__field_wrapper">
                             <label for="title" class="form__label">Title</label>
-                            <input type="text" class="form__field" onclick="checkInput(), errorMessage(), sendValueTitle()" id="title" required>
+                            <input type="text" class="form__field" id="title" maxlength="255">
                             <p class="form__error-msg hide" id="title-error">Title is required.</p>
                         </div>
                         <div class="form__field_wrapper">
                             <label for="subtitle" class="form__label">Short description</label>
-                            <input type="text" class="form__field" onclick="checkInput(), errorMessage(), sendValueSubtitle()" id="subtitle" required>
+                            <input type="text" class="form__field" id="subtitle" maxlength="255">
                             <p class="form__error-msg hide" id="subtitle-error">Short description is required.</p>
                         </div>
                         <div class="form__field_wrapper">
                             <label for="author-name" class="form__label">Author name</label>
-                            <input type="text" class="form__field" onclick="checkInput(), errorMessage(), sendValueAuthorName()" id="author-name" required>
+                            <input type="text" class="form__field" id="author-name" maxlength="255">
                             <p class="form__error-msg hide" id="author-name-error">Author name is required.</p>
                         </div>
                         <div class="form__field_wrapper">
                             <label for="avatar-box" class="form__label">Author photo</label>
                             <div class="form__avatar_wrapper">
                                 <label for="avatar-box" class="form__avatar-upload">
-                                    <input type="file" class="hide" id="avatar-box" onchange="uploadAvatar()" onclick="removeAvatar()" accept=".png, .jpg, .jpeg, .gif">
+                                    <input type="file" class="hide" id="avatar-box" accept=".png, .jpg, .jpeg, .gif">
                                     <img class="form__image avatar hide" src="" id="avatar">
                                 </label>
                                 <label for="avatar-box" class="form__avatar-update" id="avatar-upload">Upload</label> 
@@ -75,13 +84,13 @@
                         </div>
                         <div class="form__field_wrapper">
                             <label for="date" class="form__label">Publish date</label>                            
-                            <input type="date" class="form__field date" onclick="checkInput(), errorMessage(), sendValueDate()" id="date" required>
+                            <input type="date" class="form__field date" id="date" >
                             <p class="form__error-msg hide" id="date-error">Publish date is required.</p>
                         </div>                 
                         <div class="form__field_wrapper">
                             <label for="big-image-box" class="form__label">Hero image</label>
                             <label for="big-image-box" class="form__img-upload big" id="big-image-label">
-                                <input type="file" class="hide" id="big-image-box" onchange="uploadArtImg()" onclick="removeArtImg()" accept=".png, .jpg, .jpeg, .gif">
+                                <input type="file" class="hide" id="big-image-box" accept=".png, .jpg, .jpeg, .gif">
                                 <div class="form__icon">
                                     <img src="../images/icon/camera.png" class="form__icon-img">
                                     <p class="form__icon-name">Upload</p>
@@ -97,7 +106,7 @@
                         <div class="form__field_wrapper">
                             <label for="small-image-box" class="form__label">Hero image</label>
                             <label for="small-image-box" class="form__img-upload small">
-                                <input type="file" class="hide" id="small-image-box" onchange="uploadCardImg()" onclick="removeCardImg()" accept=".png, .jpg, .jpeg, .gif">
+                                <input type="file" class="hide" id="small-image-box" accept=".png, .jpg, .jpeg, .gif">
                                 <div class="form__icon">
                                     <img src="../images/icon/camera.png" class="form__icon-img">
                                     <p class="form__icon-name">Upload</p>
@@ -128,7 +137,7 @@
                                         <p class="form__article_subtitle" id="article-subtitle">Please, enter any description</p>
                                     </div>
                                     <div class="form__preview_img article" id="article-img">
-                                        <img class="form__image hide" src="" id="article-image">
+                                        <img class="form__image" src="" id="article-image">
                                     </div>
                                 </div>
                             </div>
@@ -138,7 +147,7 @@
                             <div class="form__outer_post-frame">
                                 <div class="form__inner_post-frame">
                                     <div class="form__preview_img post">
-                                        <img class="form__image hide" src="" id="card-image">
+                                        <img class="form__image" src="" id="card-image">
                                     </div>
                                     <div class="form__post_title-block">
                                         <h4 class="form__post_title" id="card-title">New Post</h4>
@@ -147,7 +156,7 @@
                                     <div class="form__post_info">
                                         <div class="form__post_author">
                                             <div class="form__author-avatar">
-                                                <img class="form__image avatar hide" src="" id="card-avatar">
+                                                <img class="form__image avatar" src="" id="card-avatar">
                                             </div>
                                             <p class="form__author-name" id="card-author-name">Enter author name</p>
                                         </div>
@@ -162,7 +171,7 @@
             <div class="form__content">
                 <h2 class="form__title">Content</h2>
                 <label class="form__label" for="textarea">Post content (plain text)</label>
-                <textarea type="text" class="form__textarea" id="textarea" placeholder="Type anything you want ..." required></textarea>
+                <textarea type="text" class="form__textarea" id="textarea" placeholder="Type anything you want ..." ></textarea>
             </div>
         </form>
     </main>

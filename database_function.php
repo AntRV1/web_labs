@@ -153,8 +153,7 @@ function getUser(string $email): array {
       throw new Exception ('Пользователь не найден.');
     }
     return $row;
-  } catch(Exception) {
-      // header("Location: /404.php");  
-      echo 'ошибка';    
+  } catch(Exception $e) {
+    throw $e;
   }
 }

@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
   const emailValidChars = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,}$/;
   const email = document.getElementById('email');
   const errorMsg = document.getElementById('email-error-msg');
-  // let emailReady = new Boolean(false);
   const emptyEmail = 'Email is required.'; 
   const invalidEmail = 'Incorrect email format. Correct format is ****@**.**';
 

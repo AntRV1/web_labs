@@ -1,116 +1,155 @@
-// Переключатель Password: показать/скрыть пароль
+document.addEventListener("DOMContentLoaded", (event) => {
+  const formData = {
+    email: '',
+    password: '',
+  }
 
-function switchPassword() {
   const eyeButton = document.getElementById('eye-button');
-  const psw = document.getElementById('password');  
- 
-  eyeButton.classList.toggle('hide-button');
-  eyeButton.classList.toggle('show-button');
-  if(eyeButton.classList.contains('hide-button')) {
-    psw.type = 'password';
-  } else {
+  const field = document.querySelectorAll('.login-form__field');
+  const email = document.getElementById('email');
+  const errorMsg = document.getElementById('email-error-msg');
+  const form = document.getElementById('login-form');  
+  const psw = document.getElementById('password');
+
+  const emailValidChars = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,}$/;
+  const emptyEmail = 'Email is required.';
+  const invalidEmail = 'Incorrect email format. Correct format is ****@**.**';
+
+  let emailReady = false;
+
+  function switchPassword() {
+
+    eyeButton.classList.toggle('hide-button');
+    eyeButton.classList.toggle('show-button');
+    if (eyeButton.classList.contains('hide-button')) {
+      psw.type = 'password';
+    } else {
       psw.type = 'text';
-  };      
-};
-    
-
-
-// Переключатель классов Input в зависимости от: пусто/не пусто
-
-let field = document.querySelectorAll('input');
-
-field.forEach(field => {
-  field.addEventListener('blur', () => {
-    if(field.value.length > 0) {
-      field.classList.add('not-empty');            
-    } else {
-        field.classList.remove('not-empty');
-        field.classList.remove('valid');
-    }         
-  });
-});
-
-//Валидация  email
-
-const emailValidChars = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,}$/;
-const email = document.getElementById('email');
-const errorMsg = document.getElementById('email-error-msg');
-let emailReady = new Boolean(false);
-const emptyEmail = 'Email is required.'; 
-const invalidEmail = 'Incorrect email format. Correct format is ****@**.**';
-
-function emailValid(value) {
-  return emailValidChars.test(value);
-}
-
-function checkEmail() {
-  if (emailValid(email.value)) {      
-    errorMsg.classList.add('hide');
-    email.classList.remove('invalid');
-    email.classList.add('valid');
-    return emailReady = true;
-  } else {
-    errorMsg.classList.remove('hide');
-    email.classList.add('invalid')
-    if(email.value.length == 0) {
-      errorMsg.innerHTML = emptyEmail;      
-    } else {
-      errorMsg.innerHTML = invalidEmail;      
     };
-    return emailReady = false;
   };
-};
 
-email.addEventListener('blur', checkEmail);
+  function checkPassword() {
+    const pswError = document.getElementById('psw-error-msg');
+    const pswErrorMsg = 'Password is required.';    
+    let str = psw.value.trim();
 
-// Проверка пароля
-
-function checkPassword() {
-  let psw = document.getElementById('password');
-  const pswError = document.getElementById('psw-error-msg');
-  const pswErrorMsg = 'Password is required.';
-
-  psw.addEventListener('blur', () => {
-    if(psw.value.length < 3) {
+    if ((str.length < 5) || (str.length > 50)) {
       pswError.classList.remove('hide');
       psw.classList.add('invalid')
-      pswError.innerHTML = pswErrorMsg;
+      pswError.innerText = pswErrorMsg;
     } else {
       pswError.classList.add('hide');
       psw.classList.remove('invalid')
       psw.classList.add('valid')
     };
-  });  
-}; 
-
-// Проверка заполнения формы
-
-let form = document.getElementById('login-form');
-
-function checkForm(form, emailReady) { 
-  form.preventDefault();
-  
-  let psw = document.getElementById('password');
-  const error = document.getElementById('error');
-  const errorMsg = document.getElementById('error-msg');
-  const checkField = 'A-Ah! Check all fields,';
-  const incorrectField = 'Email or password is incorrect.';
-  const email = document.getElementById('email');
-
-  if((psw.value.length >= 3) && (checkEmail())) {
-    console.log('ok');
-    error.classList.add('hide');
-  } else {       
-      error.classList.remove('hide');
-      errorMsg.innerHTML = checkField;
-      if((psw.value.length > 0) && (email.value.length > 0)) {
-        errorMsg.innerHTML = incorrectField;
-      };            
   };
-};
 
-function initEventListeners() {
+  function checkInput() {
+    field.forEach(field => {
+      field.addEventListener('blur', () => {
+        let str = field.value.trim();
 
-};
+        if ((str.length >= 5) && (str.length <= 255)) {
+          field.classList.add('valid');
+          field.classList.remove('invalid');
+        } else {
+          field.classList.add('invalid');
+          field.classList.remove('valid');
+        };
 
-initEventListeners();
+        if (field.value.length > 0) {
+          field.classList.add('not-empty');
+        } else {
+          field.classList.remove('not-empty');
+        };
+      });
+    });
+  };
+
+  function emailValid(value) {
+    return emailValidChars.test(value);
+  }
+
+  function checkEmail() {
+    if (emailValid(email.value)) {
+      errorMsg.classList.add('hide');
+      email.classList.remove('invalid');
+      email.classList.add('valid');
+      return emailReady = true;
+    } else {
+      errorMsg.classList.remove('hide');
+      email.classList.add('invalid')
+      if (email.value.length == 0) {
+        errorMsg.innerHTML = emptyEmail;
+      } else {
+        errorMsg.innerHTML = invalidEmail;
+      };
+      return emailReady = false;
+    };
+  };
+
+  function checkForm(event, emailReady) {
+    event.preventDefault();
+    
+    const logIn = document.getElementById('LogIn');
+    const createAccount = document.getElementById('createAccount');    
+
+    const error = document.getElementById('error');
+    const errorMsg = document.getElementById('error-msg');
+    const checkField = 'A-Ah! Check all fields,';
+    const incorrectField = 'Email or password is incorrect.';
+    let pswLen = psw.value.trim();
+
+    if ((psw.value.length >= 5) && (checkEmail())) {
+      submitForm();
+      error.classList.add('hide-error');
+      error.classList.remove('show-error');      
+    } else {          
+      error.classList.remove('hide-error');
+      error.classList.add('show-error');
+      errorMsg.innerText = checkField;
+      if ((psw.value.length > 0) && (email.value.length > 0)) {
+        errorMsg.innerText = incorrectField;
+      };
+    };    
+  };
+
+  function onEmailChange(event) {
+    formData.email = event.target.value.trim();    
+  };
+
+  function onPasswordChange(event) {
+    formData.password = event.target.value.trim();    
+  };
+
+  function initEventListeners() {
+    eyeButton.addEventListener('click', switchPassword);
+    email.addEventListener('blur', checkEmail);
+    psw.addEventListener('blur', checkPassword);
+    email.addEventListener('input', onEmailChange);
+    psw.addEventListener('input', onPasswordChange);
+    form.addEventListener('submit', checkForm);
+  };
+
+  async function submitForm() {
+       
+    let response = await fetch('/api-login.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'aplication/json;charset=utf-8'
+      },
+      body: JSON.stringify(formData)
+    });
+    
+    if(response.ok) {
+      response.redirected && (window.location.href = response.url)
+    }
+    else {
+      const responseText = await response.text()
+      alert(responseText)
+    }  
+  };
+
+  initEventListeners();
+  checkInput();
+});

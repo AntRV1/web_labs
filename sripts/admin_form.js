@@ -1,49 +1,173 @@
-//Проверка полей
+const postData = {
+  title: '',
+  subtitle: '',
+  authorName: '',
+  authorPhoto: '',
+  publishDate: '',
+  cardPreviewDate: '',
+  articleImage: '',
+  cardImage: '',
+  content: '',
+};
 
-function checkInput() {//valid
-  let field = document.querySelectorAll('.form__field');
+const defaultTitle = 'New Post';
+const defaultSubtitle = 'Please, enter any description';
+const defaultAuthorName = 'Enter author name';
+const defaultPublishDate = '4/19/2023';
+const defaultImageSrc = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAPCAIAAABbdmkjAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAAmSURBVChTY/hONBh4pd++fYMyv3/Hzx5S3oLSRAAaKR3YcP3+HQDVIV/h+NFFAwAAAABJRU5ErkJggg==';
+
+const logout = document.getElementById('logout');
+const title = document.getElementById('title');
+const subtitle = document.getElementById('subtitle');
+const authorName = document.getElementById('author-name');
+const inputAuthorPhoto = document.getElementById('avatar-box');
+const inputArticleImage = document.getElementById('big-image-box');
+const inputCardImage = document.getElementById('small-image-box');
+const removeAuthorPhoto = document.getElementById('avatar-remove');
+const removeBigImage = document.getElementById('big-image-remove');
+const removeSmallImage = document.getElementById('small-image-remove');
+const publishDate = document.getElementById('date');
+const content =document.getElementById('textarea');
+const form = document.getElementById('form');
+
+const cardDate = document.getElementById('card-date');
+
+const titleError = document.getElementById('title-error');
+const subtitleError = document.getElementById('subtitle-error');
+const authorNameError = document.getElementById('author-name-error');
+const dateError = document.getElementById('date-error');
+
+const errorForm = document.getElementById('wrong');
+const validForm = document.getElementById('correct');
+
+const field = document.querySelectorAll('.form__field');
+
+const logo = document.getElementById('logo');
+
+let r = Math.floor(Math.random()*256);
+    g = Math.floor(Math.random()*256);
+    b = Math.floor(Math.random()*256);
+
+logo.style.backgroundColor ="rgb("+r+", "+g+", "+b+")";
+
+function onTitleChange(event) {
+  postData.title = event.target.value.trim();  
+
+  invalidatePostPreview();
+};
+
+function onSubtitleChange(event) {
+  postData.subtitle = event.target.value.trim();
+
+  invalidatePostPreview();
+};
+
+function onAuthorNameChange(event) {
+  postData.authorName = event.target.value.trim();   
   
+  invalidatePostPreview();
+}
+
+function onAuthorPhotoChange(event) {
+  const file = event.target.files[0];
+
+  if((file.type == 'image/jpeg') 
+    || (file.type == 'image/jpg')
+    || (file.type == 'image/png')
+    || (file.type == 'image/gif')) {
+    readFileAsBase64(file, (result) => {
+      postData.authorPhoto = result;
+
+      invalidatePostPreview();
+    });
+  }
+};
+
+function onArticleImageChange(event) {
+  const file = event.target.files[0];
+
+  if((file.type == 'image/jpeg') 
+    || (file.type == 'image/jpg')
+    || (file.type == 'image/png')
+    || (file.type == 'image/gif')) {
+    readFileAsBase64(file, (result) => {
+      postData.articleImage = result;   
+
+      invalidatePostPreview();
+    });
+  }
+};
+
+function onCardImageChange(event) {
+  const file = event.target.files[0];
+  
+  if((file.type == 'image/jpeg') 
+    || (file.type == 'image/jpg')
+    || (file.type == 'image/png')
+    || (file.type == 'image/gif')) {
+    readFileAsBase64(file, (result) => {
+      postData.cardImage = result;
+      console.log(postData.cardImage) ;     
+
+      invalidatePostPreview();
+    });
+  } 
+};
+
+function removePhoto(event) {
+  postData.authorPhoto = '';
+  invalidatePostPreview();
+};
+
+function removeArticleImage(event) {
+  postData.articleImage = '';
+
+  invalidatePostPreview();
+};
+
+function removeCardImage(event) {
+  postData.cardImage = '';
+
+  invalidatePostPreview();
+};
+
+function onPublishDateChange(event) {
+  let settedDate = new Date(event.target.value);
+  let date = event.target.value;
+
+  postData.cardPreviewDate = [settedDate.getMonth() + 1, [settedDate.getDate(), settedDate.getFullYear()].map(n => n < 10 ? '0' + n : '' + n).join('/')].join('/');
+    
+  [year, month, day] = date.split('-');
+  postData.publishDate = new Date(year, month - 1, day).getTime() / 1000;
+    
+  invalidatePostPreview();
+};
+
+function checkInput() {    
   field.forEach(field => {
-    field.addEventListener('blur', () => {
-      
+    field.addEventListener('blur', () => {      
       let str = field.value.trim();
       
       if(str.length >= 3) {
         field.classList.add('valid');
-
-        field.classList.remove('invalid');          
-          
+        field.classList.remove('invalid');         
       } else {
           field.classList.add('invalid');
-
           field.classList.remove('valid');
       };
       
       if(field.value.length > 0) {
         field.classList.add('not-empty');            
-      } else if(field.classList.contains('not-empty')) {
+      } else {
           field.classList.remove('not-empty');
       };
-
     });
   });
 };
 
-// Вывод ошибок
-
 function errorMessage() {
-  let title = document.getElementById('title');
-  let subtitle = document.getElementById('subtitle');
-  let authorName = document.getElementById('author-name');
-  let date = document.getElementById('date');
-  const titleError = document.getElementById('title-error');
-  const subtitleError = document.getElementById('subtitle-error');
-  const authorNameError = document.getElementById('author-name-error');
-  const dateError = document.getElementById('date-error');
-
-  title.addEventListener('blur', () => {
-    let str = title.value.trim();
-    if(str.length < 3) {
+  title.addEventListener('blur', () => {    
+    if(postData.title.length < 3) {
       titleError.classList.remove('hide');
     };
   });
@@ -51,9 +175,8 @@ function errorMessage() {
     titleError.classList.add('hide');   
   });
 
-  subtitle.addEventListener('blur', () => {
-    let str = subtitle.value.trim();
-    if(str.length < 3) {
+  subtitle.addEventListener('blur', () => {    
+    if(postData.subtitle.length < 3) {
       subtitleError.classList.remove('hide');
     };
   });
@@ -61,9 +184,8 @@ function errorMessage() {
       subtitleError.classList.add('hide');   
   });
 
-  authorName.addEventListener('blur', () => {
-    let str = authorName.value.trim();
-    if(str.length < 3) {
+  authorName.addEventListener('blur', () => {    
+    if(postData.authorName.length < 3) {
       authorNameError.classList.remove('hide');
     };
   });
@@ -71,335 +193,206 @@ function errorMessage() {
       authorNameError.classList.add('hide');   
   });
 
-  date.addEventListener('blur', () => {
-    let str = date.value.trim();
-    if(str.length < 3) {
+  date.addEventListener('change', () => {    
+    if(postData.publishDate.length < 3) {
       dateError.classList.remove('hide');
     };
   });
-  date.addEventListener('input', () => {   
+  date.addEventListener('change', () => {   
       dateError.classList.add('hide');   
   });
 }
 
-//Загрузка изображений
-
-function uploadAvatar() {
-  const preview = document.getElementById('avatar');
-  const cardAvatar = document.getElementById('card-avatar');
-  const newImg = document.getElementById('avatar-new');
-  const remove = document.getElementById('avatar-remove');
-  const upload = document.getElementById('avatar-upload');
-  const file = document.getElementById('avatar-box').files[0];
-  const reader = new FileReader();
-  
-  reader.addEventListener("load", () => { 
-    preview.src = reader.result;
-    cardAvatar.src = reader.result;
-    },
-      false,
-    );
-
-  if (file) {
-    reader.readAsDataURL(file);
-    preview.classList.remove('hide');  
-    cardAvatar.classList.remove('hide');
-    newImg.classList.remove('hide');
-    remove.classList.remove('hide');
-    upload.classList.add('hide');
-  }; 
+function onContentChange(event) {
+  postData.content = event.target.value.trim();
 };
 
-function uploadArtImg() {
-  const preview = document.getElementById('big-image');
-  const articleImage = document.getElementById('article-image');
-  const newImg = document.getElementById('big-image-new');
-  const remove = document.getElementById('big-image-remove');
-  const file = document.getElementById('big-image-box').files[0];
-  const description = document.getElementById('big-image-description');
-  const reader = new FileReader();
+function validateForm(event) {
+  event.preventDefault();
 
-  reader.addEventListener("load", () => { 
-    preview.src = reader.result;
-    articleImage.src = reader.result;
+  if(postData.title.length >= 3
+    && postData.subtitle.length >= 3
+    && postData.authorName.length >= 3
+    && postData.authorPhoto.length >= 3
+    && postData.publishDate >= 3
+    && postData.articleImage.length >= 3
+    && postData.cardImage.length >= 3
+    && postData.content.length >= 3) {
+      errorForm.classList.add('hide');
+      validForm.classList.remove('hide');
+      
+      // console.log('"image": "'+postData.articleImage+'",');
+      // console.log('"title": "'+postData.title+'",');
+      // console.log('"subtitle": "'+postData.subtitle+'",');
+      // console.log('"author_name": "'+postData.authorName+'",');
+      // console.log('"author_avatar": "/static/images/'+postData.authorName.replace(/\s/g, '-')+'.jpg",');
+      // console.log('"publish_date": "'+postData.publishDate+'",');
+      // console.log('"image_src": "/static/images/'+postData.title.replace(/\s/g, '-')+'.jpg",');
+      // console.log('"image_alt": "'+postData.title+'",');
+      // console.log('"content": "'+postData.content+'",');
+      // console.log('"featured": "0",');
+      // console.log('"most_recent": "1",');
+      // console.log('"label": "0"');
+
+      addPost();
+    } else {
+      errorForm.classList.remove('hide');
+      validForm.classList.add('hide');
+      
+    };
+
+    if(postData.title.length >= 3){
+      titleError.classList.add('hide');
+    } else {
+        titleError.classList.remove('hide');
+    };
+
+    if(postData.subtitle.length >= 3){
+      subtitleError.classList.add('hide');
+    } else {
+        subtitleError.classList.remove('hide');
+    };
+
+    if(postData.authorName.length >= 3){
+      authorNameError.classList.add('hide');
+    } else {
+        authorNameError.classList.remove('hide');
+    };
+
+    if(postData.publishDate >= 3){
+      dateError.classList.add('hide');
+    } else {
+        dateError.classList.remove('hide');
+    };    
+};
+
+async function addPost() {
+  const newPost = { 
+    image: postData.articleImage,
+    photo: postData.authorPhoto,
+    title: postData.title,
+    subtitle: postData.subtitle,
+    author_name: postData.authorName,    
+    publish_date: postData.publishDate,     
+    content: postData.content,       
+  }
+ 
+  let response = await fetch('/api-new.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'aplication/json;charset=utf-8'
     },
-      false,
-    );
+    body: JSON.stringify(newPost)
+  });
 
-  if (file) {
-    reader.readAsDataURL(file);
-    preview.classList.remove('hide');  
-    articleImage.classList.remove('hide'); 
-    description.classList.add('hide');
-    newImg.classList.remove('hide');
-    remove.classList.remove('hide');
+  console.log(response.ok);
+};
+
+async function exitForm() {
+  let response = await fetch('/api-logout.php');
+
+  if(response.ok) {
+    response.redirected && (window.location.href = response.url)
+  }
+  else {
+    const responseText = await response.text()
+    alert(responseText)
+  } 
+};
+
+function initEventListeners() {
+  title.addEventListener('input', onTitleChange);
+  subtitle.addEventListener('input', onSubtitleChange);
+  authorName.addEventListener('input', onAuthorNameChange);
+  inputAuthorPhoto.addEventListener('change', onAuthorPhotoChange);  
+  inputArticleImage.addEventListener('change', onArticleImageChange);
+  inputCardImage.addEventListener('change', onCardImageChange);
+  removeAuthorPhoto.addEventListener('click', removePhoto);  
+  removeBigImage.addEventListener('click', removeArticleImage);
+  removeSmallImage.addEventListener('click', removeCardImage);
+  publishDate.addEventListener('change', onPublishDateChange);
+  content.addEventListener('blur', onContentChange);
+  form.addEventListener('submit', validateForm);
+  logout.addEventListener('click', exitForm)
+}  
+  
+function invalidatePostPreview() {
+  const postPreviewTitle = document.getElementById('article-title');
+  const cardPreviewTitle = document.getElementById('card-title');
+  postPreviewTitle.innerText = postData.title || defaultTitle;
+  cardPreviewTitle.innerText = postData.title || defaultTitle;
+
+  const postPreviewSubtitle = document.getElementById('article-subtitle');
+  const cardPreviewSubtitle = document.getElementById('card-subtitle');
+  postPreviewSubtitle.innerText = postData.subtitle || defaultSubtitle;
+  cardPreviewSubtitle.innerText = postData.subtitle || defaultSubtitle;
+
+  const cardAuthorName = document.getElementById('card-author-name');
+  cardAuthorName.innerText = postData.authorName || defaultAuthorName;
+
+  const authorPhoto = document.getElementById('avatar');
+  const cardAuthorPhoto = document.getElementById('card-avatar');
+  const avatarUpload = document.getElementById('avatar-upload');
+  const avatarNew = document.getElementById('avatar-new');
+  const avatarRemove = document.getElementById('avatar-remove');
+
+  authorPhoto.src = postData.authorPhoto;  
+  cardAuthorPhoto.src = postData.authorPhoto || defaultImageSrc;
+  if(postData.authorPhoto != '') {
+    [authorPhoto, avatarNew, avatarRemove].forEach(el => {el.classList.remove('hide')});
+    avatarUpload.classList.add('hide');
+  } else {
+    [authorPhoto, avatarNew, avatarRemove].forEach(el => {el.classList.add('hide')});
+    avatarUpload.classList.remove('hide');
   };
-};
 
-function uploadCardImg() {
-  const preview = document.getElementById('small-image');
+  const bigImage = document.getElementById('big-image');
+  const articleImage = document.getElementById('article-image');
+  const bigImageNew = document.getElementById('big-image-new');
+  const bigImageRemove = document.getElementById('big-image-remove');
+  const bigImageDescription = document.getElementById('big-image-description');
+  bigImage.src = postData.articleImage;
+  articleImage.src = postData.articleImage || defaultImageSrc;
+  if(postData.articleImage != '') {    
+    bigImageDescription.classList.add('hide');
+    [bigImage, bigImageNew, bigImageRemove].forEach(el => {el.classList.remove('hide')});
+  } else {    
+    [bigImage, bigImageNew, bigImageRemove].forEach(el => {el.classList.add('hide')});
+    bigImageDescription.classList.remove('hide');
+  };
+
+  const smallImage = document.getElementById('small-image');
   const cardImage = document.getElementById('card-image');
-  const newImg = document.getElementById('small-image-new');
-  const remove = document.getElementById('small-image-remove');
-  const file = document.getElementById('small-image-box').files[0];
-  const description = document.getElementById('small-image-description');
-  const reader = new FileReader();
+  const smallImageNew = document.getElementById('small-image-new');
+  const smallImageRemove = document.getElementById('small-image-remove');
+  const smallImageDescription = document.getElementById('small-image-description');
+  smallImage.src = postData.cardImage;
+  cardImage.src = postData.cardImage || defaultImageSrc;
+  if(postData.cardImage != '') {    
+    [smallImage, smallImageNew, smallImageRemove].forEach(el => {el.classList.remove('hide')});
+    smallImageDescription.classList.add('hide');
+  } else {
+    [smallImage, smallImageNew, smallImageRemove].forEach(el => {el.classList.add('hide')});
+    smallImageDescription.classList.remove('hide');
+  };
 
-  reader.addEventListener("load", () => { 
-    preview.src = reader.result;
-    cardImage.src = reader.result;
+  const cardDate = document.getElementById('card-date');
+  cardDate.innerText = postData.cardPreviewDate || defaultPublishDate;
+}
+
+  function readFileAsBase64(file, onload) {
+    const reader = new FileReader();
+
+    reader.addEventListener('load', () => {
+      onload(reader.result);
     },
       false,
     );
 
-  if (file) {
     reader.readAsDataURL(file);
-    preview.classList.remove('hide');  
-    cardImage.classList.remove('hide');
-    description.classList.add('hide');
-    newImg.classList.remove('hide');
-    remove.classList.remove('hide'); 
-  }; 
-};
+  }
 
-//Удаление изображений
-
-function removeAvatar() {
-  const preview = document.getElementById('avatar');
-  const remove = document.getElementById('avatar-remove');
-  const newImg = document.getElementById('avatar-new');
-  const avatar = document.getElementById('card-avatar');
-  const upload = document.getElementById('avatar-upload');
-
-  remove.addEventListener('click', () => {
-    preview.src = "";
-    avatar.src = "";
-    preview.classList.add('hide');
-    avatar.classList.add('hide');
-    newImg.classList.add('hide');
-    remove.classList.add('hide');
-    upload.classList.remove('hide');
-  });
-};
-
-function removeArtImg() { //Article
-  const preview = document.getElementById('big-image');
-  const remove = document.getElementById('big-image-remove');
-  const newImg = document.getElementById('big-image-new');
-  const articleImage = document.getElementById('article-image');
-  const description = document.getElementById('big-image-description');
-
-  remove.addEventListener('click', () => {
-    preview.src = "";
-    articleImage.src = "";
-    preview.classList.add('hide');
-    articleImage.classList.add('hide');
-    newImg.classList.add('hide');
-    remove.classList.add('hide');
-    description.classList.remove('hide');
-  });
-};
-
-function removeCardImg() {
-  const preview = document.getElementById('small-image');
-  const remove = document.getElementById('small-image-remove');
-  const newImg = document.getElementById('small-image-new');
-  const cardImage = document.getElementById('card-image');
-  const description = document.getElementById('small-image-description');
-
-  remove.addEventListener('click', () => {
-    preview.src = "";
-    cardImage.src = "";
-    preview.classList.add('hide');
-    cardImage.classList.add('hide');
-    newImg.classList.add('hide');
-    remove.classList.add('hide');
-    description.classList.remove('hide');
-  });
-};
-
-//Передача значений из инпут в превью
-
-function sendValueTitle() {
-  let title = document.getElementById('title');
-  let articleTitle = document.getElementById('article-title');
-  let cardTitle = document.getElementById('card-title');
-  const defaultTitle = "New Post";
-
-  title.addEventListener('blur', () => {
-    let str = title.value.trim();
-    if(str.length >= 3) {
-      articleTitle.innerHTML = str;
-      cardTitle.innerHTML = str;      
-    } else {
-        articleTitle.innerHTML = defaultTitle;
-        cardTitle.innerHTML = defaultTitle;
-    };
-  }); 
-};
-
-function sendValueSubtitle() {
-  let subtitle = document.getElementById('subtitle');
-  let articleSubtitle = document.getElementById('article-subtitle');
-  let cardSubtitle = document.getElementById('card-subtitle');
-  const defaultSubtitle = "Please, enter any description";
-
-  subtitle.addEventListener('blur', () => {
-    let str = subtitle.value.trim();
-    if(str.length >= 3) {
-      articleSubtitle.innerHTML = str;
-      cardSubtitle.innerHTML = str;
-    } else {
-        articleSubtitle.innerHTML = defaultSubtitle;
-        cardSubtitle.innerHTML = defaultSubtitle;
-    };
-  }); 
-};
-
-function sendValueAuthorName() {
-  let name = document.getElementById('author-name');
-  let cardname = document.getElementById('card-author-name');
-  const defaultName = "Enter author name";
-
-  name.addEventListener('blur', () => {
-    let str = name.value.trim();
-    if(str.length >= 3) {
-      cardname.innerHTML = str;
-    } else {
-        cardname.innerHTML = defaultName;
-    };
-  });
-};
-
-function sendValueDate() {
-  let publishDate = document.getElementById('date');
-  let cardDate = document.getElementById('card-date');
-  const defaultDate = "4/19/2023";
-
-  date.addEventListener('blur', () => {
-    let today = new Date();
-    // let today = Date.parse(publishDate.value);
-    userDate = [today.getMonth() + 1, [today.getDate(), today.getFullYear()].map(n => n < 10 ? '0' + n : '' + n).join('/')].join('/');
-    // console.log(today);
-    // console.log(userDate);
-    // console.log(publishDate.value);
-    let str = publishDate.value;
-    if(str.length > 0) {
-      cardDate.innerHTML = userDate;
-    } else {
-        cardDate.innerHTML = defaultDate;
-    };
-  }); 
-};
-
-// Валидация
-// const form = document.getElementById('form');
-
-// function checkForm(form) {  
-//   form.preventDefault();
-//   // console.log('fdgvfd');
-//   const formCorrect = document.getElementById('correct');
-//   const formWrong = document.getElementById('wrong');
-//   const submit = document.getElementById('submit');
-
-//   let title = document.getElementById('title');
-//   let subtitle = document.getElementById('subtitle');
-//   let authorName = document.getElementById('author-name');
-//   let avatar = document.getElementById('avatar');
-//   let date = document.getElementById('date');
-//   let bigImage = document.getElementById('big-image');
-//   let smallImage = document.getElementById('small-image');
-//   let content = document.getElementById('textarea');
-  
-
-//   let titleOk = Boolean;
-//   let subtitleOk = Boolean;
-//   let authorNameOk = Boolean;
-//   let dateOk = Boolean;
-//   let avatarOk = Boolean;
-//   let bigImageOk = Boolean;
-//   let contentOk = Boolean;
-
-//   // let titleVal = "";
-//   // let subtitleVal = "";
-//   // let authorNameVal = "";
-//   // let dateVal = "";
-//   // let avatarVal = "";
-//   // let bigImageVal = "";
-//   // let contentVal = "";
-
-   
-//   if(title.value.trim().length >= 3) {
-//     let titleVal = title.value.trim();
-//     titleOk = true;
-//     // console.log(titleVal);
-//   } else {
-//       titleOk = false;
-//   };
-//   if(subtitle.value.trim().length >= 3) {
-//     let subtitleVal = subtitle.value.trim();
-//     subtitleOk = true;
-//     // console.log(subtitleVal);
-//   } else {
-//       subtitleOk = false;
-//   };
-//   if(authorName.value.trim().length >= 3) {
-//     let authorNameVal = authorName.value.trim();
-//     authorNameOk = true;
-//     // console.log(authorNameVal);
-//   } else {
-//       authorNameOk = false;
-//   };
-//   if(date.value.length >= 3) {
-//     let dateiVal = date.value;
-//     dateOk = true;
-//     // console.log(date.value);
-//   } else {
-//       dateOk = false;
-//   };
-//   if(avatar.src.length >= 10) {
-//     let avatarVal = avatar.src;
-//     avatarOk = true
-//     // console.log(avatarVal);
-//   } else {
-//       avatarOk = false;
-//   };
-//   if(bigImage.src.length >= 10) {
-//     let bigImageVal = bigImage.src;
-//     bigImageOk = true;
-//     // console.log(bigImageVal);
-//   } else {
-//       bigImageOk = false;
-//   };
-//   if(content.value.trim().length >= 10) {
-//     let contentVal = content.value.trim();
-//     contentOk = true;
-//     // console.log(contentVal);
-//   } else {
-//       contentOk = false;
-//   };  
-  
-//   if((titleOk = true) && (subtitleOk = true) && (authorNameOk = true) && (dateOk = true) && (avatarOk = true) && (bigImageOk = true) && (contentOk = true)) {
-//     formCorrect.classList.remove('hide');
-//     formWrong.classList.add('hide');
-//     console.log('ok');
-//   } else {
-//     formCorrect.classList.add('hide');
-//     formWrong.classList.remove('hide');
-//     console.log('!!!');
-//   };
-
-// }; 
-
-// // "image":
-// // "title": "New post",
-// // "subtitle": "Very new post.",
-// // "author_name": "William Wong",
-// // "author_avatar": "/static/images/olga-moiseeva.jpg",
-// // "publish_date": "1443176990",
-// // "image_src": "/static/images/fox.png",
-// // "image_alt": "Лиса",
-// // "content": "New content",
-// // "featured": "0",
-// // "most_recent": "1",
-// // "label": "0"
+initEventListeners();
+invalidatePostPreview();
+checkInput();
+errorMessage();

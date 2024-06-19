@@ -116,13 +116,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
     };
   
     function onEmailChange(event) {
-      formData.email = event.target.value.trim();
-      console.log(formData.email)
+      formData.email = event.target.value.trim();     
     };
   
     function onPasswordChange(event) {
-      formData.password = event.target.value.trim();
-      console.log(formData.password)
+      formData.password = event.target.value.trim();      
     };
   
     function initEventListeners() {
@@ -143,8 +141,14 @@ document.addEventListener("DOMContentLoaded", (event) => {
         },
         body: JSON.stringify(formData)
       });
-    
-      console.log(response);
+
+      if(response.ok) {
+        response.redirected && (window.location.href = response.url)
+      }
+      else {
+        const responseText = await response.text()
+        alert(responseText)
+      }
     };
   
     initEventListeners();
